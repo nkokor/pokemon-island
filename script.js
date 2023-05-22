@@ -11,6 +11,6 @@ const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
 worldMap.onload = () => {
-  canvasContext.drawImage(worldMap, -1380, -300)
+  canvasContext.drawImage(worldMap, -1380, -500)
 }
 
