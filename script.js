@@ -51,42 +51,21 @@ const keys = {
   }
 }
 
-function animate() {
-  window.requestAnimationFrame(animate)
-  background.draw()
-  canvasContext.drawImage(player, 
-    0,
-    0,
-    player.width/4,
-    player.height,
-    canvas.width/2 - 10, canvas.height/2 - 10,
-    player.width/4,
-    player.height
-  )
-  if(keys.right.pressed) {
-    background.position.x = background.position.x - 4
-  } else if(keys.left.pressed) {
-    background.position.x = background.position.x + 4
-  } else if(keys.up.pressed) {
-    background.position.y = background.position.y + 4
-  } else if(keys.down.pressed) {
-    background.position.y = background.position.y - 4
-  }
-
-
-}
-
-animate()
+let lastPressedKey = ''
 
 window.addEventListener("keydown", (event) => {
   if(event.key === "ArrowRight") {
     keys.right.pressed = true
+    lastPressedKey = 'r'
   } else if(event.key === "ArrowLeft" ) {
     keys.left.pressed = true
+    lastPressedKey = 'l'
   } else if(event.key === "ArrowUp") {
     keys.up.pressed = true
+    lastPressedKey = 'u'
   } else if(event.key === "ArrowDown") {
     keys.down.pressed = true
+    lastPressedKey = 'd'
   }
 })
 
@@ -101,5 +80,36 @@ window.addEventListener("keyup", (event) => {
     keys.down.pressed = false
   }
 })
+
+function move() {
+  if(keys.right.pressed && lastPressedKey === 'r') {
+    background.position.x = background.position.x - 4
+  } else if(keys.left.pressed && lastPressedKey === 'l') {
+    background.position.x = background.position.x + 4
+  } else if(keys.up.pressed && lastPressedKey === 'u') {
+    background.position.y = background.position.y + 4
+  } else if(keys.down.pressed && lastPressedKey === 'd') {
+    background.position.y = background.position.y - 4
+  }
+}
+
+function animate() {
+  window.requestAnimationFrame(animate)
+  background.draw()
+  canvasContext.drawImage(player, 
+    0,
+    0,
+    player.width/4,
+    player.height,
+    canvas.width/2 - 10, canvas.height/2 - 10,
+    player.width/4,
+    player.height
+  )
+  move()
+}
+
+animate()
+
+
 
 
