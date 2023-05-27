@@ -105,19 +105,15 @@ window.addEventListener("keydown", (event) => {
   if(event.key === "ArrowRight") {
     keys.right.pressed = true
     lastPressedKey = 'r'
-    player.moving = true
   } else if(event.key === "ArrowLeft" ) {
     keys.left.pressed = true
     lastPressedKey = 'l'
-    player.moving = true
   } else if(event.key === "ArrowUp") {
     keys.up.pressed = true
     lastPressedKey = 'u'
-    player.moving = true
   } else if(event.key === "ArrowDown") {
     keys.down.pressed = true
     lastPressedKey = 'd'
-    player.moving = true
   }
 })
 
@@ -147,6 +143,38 @@ battleFields.forEach( (f) => {
   movableObjects.push(f)
 })
 
+function setScene() {
+  background.draw()
+  for(let i = 0; i < worldBoundaries.length; i++) {
+    worldBoundaries[i].draw()
+  }
+  for(let i = 0; i < battleFields.length; i++) {
+    battleFields[i].draw()
+  }
+  player.draw()
+  foreground.draw()
+}
+
+function animatePlayer() {
+  if(keys.right.pressed && lastPressedKey === 'r') {
+    player.moving = true
+    playerImage.src = "./images/player-right.png"
+    player.image = playerImage
+  } else if(keys.left.pressed && lastPressedKey === 'l') {
+    player.moving = true
+    playerImage.src = "./images/player-left.png"
+    player.image = playerImage
+  } else if(keys.up.pressed && lastPressedKey === 'u') {
+    player.moving = true
+    playerImage.src = "./images/player-up.png"
+    player.image = playerImage
+  } else if(keys.down.pressed && lastPressedKey === 'd') {
+    player.moving = true
+    playerImage.src = "./images/player-down.png"
+    player.image = playerImage
+  }
+}
+
 function move() {
   let moving = true
   if(keys.right.pressed && lastPressedKey === 'r') {
@@ -166,8 +194,6 @@ function move() {
       movableObjects.forEach( (m) => {
         m.position.x = m.position.x - 3
       })
-      playerImage.src = "./images/player-right.png"
-      player.image = playerImage
     }
   } else if(keys.left.pressed && lastPressedKey === 'l') {
     for(let i = 0; i < worldBoundaries.length; i++) {
@@ -186,8 +212,6 @@ function move() {
       movableObjects.forEach( (m) => {
         m.position.x = m.position.x + 3
       })
-      playerImage.src = "./images/player-left.png"
-      player.image = playerImage
     }
   } else if(keys.up.pressed && lastPressedKey === 'u') {
     for(let i = 0; i < worldBoundaries.length; i++) {
@@ -206,8 +230,6 @@ function move() {
       movableObjects.forEach( (m) => {
         m.position.y = m.position.y + 3
       })
-      playerImage.src = "./images/player-up.png"
-      player.image = playerImage
     }
   } else if(keys.down.pressed && lastPressedKey === 'd') {
     for(let i = 0; i < worldBoundaries.length; i++) {
@@ -226,8 +248,6 @@ function move() {
       movableObjects.forEach( (m) => {
         m.position.y = m.position.y - 3
       })
-      playerImage.src = "./images/player-down.png"
-      player.image = playerImage
     }
   }
 }
@@ -243,21 +263,8 @@ function areInCollision(firstObject, secondObject) {
 
 function animate() {
   window.requestAnimationFrame(animate)
-  background.draw()
-  for(let i = 0; i < worldBoundaries.length; i++) {
-    worldBoundaries[i].draw()
-  }
-  for(let i = 0; i < battleFields.length; i++) {
-    battleFields[i].draw()
-  }
-  player.draw()
-  foreground.draw()
-
-  worldBoundaries.forEach( (b) => {
-    if(areInCollision(player, b)) {
-      console.log("collision")
-    }
-  })
+  setScene()
+  animatePlayer()
   move()
 }
 
