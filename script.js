@@ -63,16 +63,21 @@ class Sprite {
   }) {
     this.position = position
     this.image = image
-    this.frames = frames
+    this.frames = {
+      ...frames,
+      value: 0,
+      framesElapsed: 0
+    }
     this.image.onload = () => {
       this.width = this.image.width / this.frames.max
       this.height = this.image.height
-    }
+    },
+    this.moving = false
   }
 
   draw() {
     canvasContext.drawImage(this.image, 
-      0,
+      this.frames.value * this.width,
       0,
       this.image.width/this.frames.max,
       this.image.height,
@@ -81,6 +86,18 @@ class Sprite {
       this.image.width/this.frames.max,
       this.image.height
     )
+    if(this.moving) {
+      if(this.frames.max > 1) {
+        this.frames.framesElapsed+=1
+      }
+      if(this.frames.framesElapsed % 10 == 0) {
+        if(this.frames.value + 1 < this.frames.max) {
+          this.frames.value += 1
+        } else {
+          this.frames.value = 0
+        }
+      }
+    }
   }
 }
 
@@ -132,27 +149,35 @@ window.addEventListener("keydown", (event) => {
   if(event.key === "ArrowRight") {
     keys.right.pressed = true
     lastPressedKey = 'r'
+    player.moving = true
   } else if(event.key === "ArrowLeft" ) {
     keys.left.pressed = true
     lastPressedKey = 'l'
+    player.moving = true
   } else if(event.key === "ArrowUp") {
     keys.up.pressed = true
     lastPressedKey = 'u'
+    player.moving = true
   } else if(event.key === "ArrowDown") {
     keys.down.pressed = true
     lastPressedKey = 'd'
+    player.moving = true
   }
 })
 
 window.addEventListener("keyup", (event) => {
   if(event.key === "ArrowRight") {
     keys.right.pressed = false
+    player.moving = false
   } else if(event.key === "ArrowLeft" ) {
     keys.left.pressed = false
+    player.moving = false
   } else if(event.key === "ArrowUp") {
     keys.up.pressed = false
+    player.moving = false
   } else if(event.key === "ArrowDown") {
     keys.down.pressed = false
+    player.moving = false
   }
 })
 
