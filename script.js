@@ -5,49 +5,6 @@ canvas.height = window.innerHeight
 
 const canvasContext = canvas.getContext('2d')
 
-const collisionsMap = []
-//map dimensions are 70x40
-for(let i = 0; i < collisions.length; i = i + 70) {
-  collisionsMap.push(collisions.slice(i, i + 70))
-}
-
-const worldBoundaries = []
-
-for(let i = 0; i < collisionsMap.length; i++) {
-  for(let j = 0; j < collisionsMap[i].length; j++) {
-    if(collisionsMap[i][j] === 1) {
-      worldBoundaries.push(new WorldBoundary({
-      position: {
-        x: j * 42 - 1400,
-        y: i * 42 - 550
-      }
-      })
-    )
-   }
-  }
-}
-
-const battleZonesMap = []
-
-for(let i = 0; i < battleZones.length; i = i + 70) {
-  battleZonesMap.push(battleZones.slice(i, i + 70))
-}
-
-const battleFields = []
-
-for(let i = 0; i < battleZonesMap.length; i++) {
-  for(let j = 0; j < battleZonesMap[i].length; j++) {
-    if(battleZonesMap[i][j] === 1) {
-      battleFields.push(new BattleField({
-        position: {
-          x: j * 42 - 1400,
-          y: i * 42 - 550
-        }
-      }))
-    }
-  }
-}
-
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
@@ -56,7 +13,6 @@ playerImage.src = "./images/player-down.png"
 
 const foregroundMap = new Image()
 foregroundMap.src = "./images/foreground-map.png"
-
 
 const background = new Sprite({
   position: {
@@ -84,6 +40,49 @@ const foreground = new Sprite({
   },
   image: foregroundMap
 })
+
+function mapData(data) {
+  const map = []
+  for(let i = 0; i < data.length; i = i + 70) {
+    map.push(data.slice(i, i + 70))
+  }
+  return map
+}
+
+const collisionsMap = mapData(collisions)
+
+const worldBoundaries = []
+
+for(let i = 0; i < collisionsMap.length; i++) {
+  for(let j = 0; j < collisionsMap[i].length; j++) {
+    if(collisionsMap[i][j] === 1) {
+      worldBoundaries.push(new WorldBoundary({
+      position: {
+        x: j * 42 - 1400,
+        y: i * 42 - 550
+      }
+      })
+    )
+   }
+  }
+}
+
+const battleZonesMap = mapData(battleZones)
+
+const battleFields = []
+
+for(let i = 0; i < battleZonesMap.length; i++) {
+  for(let j = 0; j < battleZonesMap[i].length; j++) {
+    if(battleZonesMap[i][j] === 1) {
+      battleFields.push(new BattleField({
+        position: {
+          x: j * 42 - 1400,
+          y: i * 42 - 550
+        }
+      }))
+    }
+  }
+}
 
 const keys = {
   right: {
@@ -159,7 +158,6 @@ function move() {
         x: worldBoundaries[i].position.x - 3,
         y: worldBoundaries[i].position.y
       }})){
-        console.log("collision")
         moving = false
         break
       }
@@ -180,7 +178,6 @@ function move() {
         x: worldBoundaries[i].position.x + 3,
         y: worldBoundaries[i].position.y
       }})){
-        console.log("collision")
         moving = false
         break
       }
@@ -201,7 +198,6 @@ function move() {
         x: worldBoundaries[i].position.x,
         y: worldBoundaries[i].position.y + 3
       }})){
-        console.log("collision")
         moving = false
         break
       }
@@ -222,7 +218,6 @@ function move() {
         x: worldBoundaries[i].position.x,
         y: worldBoundaries[i].position.y - 3
       }})){
-        console.log("collision")
         moving = false
         break
       }
