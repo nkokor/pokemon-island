@@ -99,13 +99,6 @@ const player = new Sprite({
   }
 })
 
-const testBoundary = new WorldBoundary({
-  position: {
-    x: 400,
-    y: 400
-  }
-})
-
 const keys = {
   right: {
     pressed: false
@@ -151,38 +144,104 @@ window.addEventListener("keyup", (event) => {
   }
 })
 
-const movableObjects = [background, testBoundary]
+const movableObjects = [background]
+
+worldBoundaries.forEach( (b) => {
+  movableObjects.push(b)
+})
 
 function move() {
+  let moving = true
   if(keys.right.pressed && lastPressedKey === 'r') {
-    movableObjects.forEach( (m) => {
-      m.position.x = m.position.x - 4
-    })
-    playerImage.src = "./images/player-right.png"
-    player.image = playerImage
+    for(let i = 0; i < worldBoundaries.length; i++) {
+      if(areInCollision(player, {
+        //deep copy
+        ...worldBoundaries[i],
+        position: {
+        x: worldBoundaries[i].position.x - 3,
+        y: worldBoundaries[i].position.y
+      }})){
+        console.log("collision")
+        moving = false
+        break
+      }
+    }
+    if(moving) {
+      movableObjects.forEach( (m) => {
+        m.position.x = m.position.x - 3
+      })
+      playerImage.src = "./images/player-right.png"
+      player.image = playerImage
+    }
   } else if(keys.left.pressed && lastPressedKey === 'l') {
-    movableObjects.forEach( (m) => {
-      m.position.x = m.position.x + 4
-    })
-    playerImage.src = "./images/player-left.png"
-    player.image = playerImage
+    for(let i = 0; i < worldBoundaries.length; i++) {
+      if(areInCollision(player, {
+        //deep copy
+        ...worldBoundaries[i],
+        position: {
+        x: worldBoundaries[i].position.x + 3,
+        y: worldBoundaries[i].position.y
+      }})){
+        console.log("collision")
+        moving = false
+        break
+      }
+    }
+    if(moving) {
+      movableObjects.forEach( (m) => {
+        m.position.x = m.position.x + 3
+      })
+      playerImage.src = "./images/player-left.png"
+      player.image = playerImage
+    }
   } else if(keys.up.pressed && lastPressedKey === 'u') {
-    movableObjects.forEach( (m) => {
-      m.position.y = m.position.y + 4
-    })
-    playerImage.src = "./images/player-up.png"
-    player.image = playerImage
+    for(let i = 0; i < worldBoundaries.length; i++) {
+      if(areInCollision(player, {
+        //deep copy
+        ...worldBoundaries[i],
+        position: {
+        x: worldBoundaries[i].position.x,
+        y: worldBoundaries[i].position.y + 3
+      }})){
+        console.log("collision")
+        moving = false
+        break
+      }
+    }
+    if(moving) {
+      movableObjects.forEach( (m) => {
+        m.position.y = m.position.y + 3
+      })
+      playerImage.src = "./images/player-up.png"
+      player.image = playerImage
+    }
   } else if(keys.down.pressed && lastPressedKey === 'd') {
-    movableObjects.forEach( (m) => {
-      m.position.y = m.position.y - 4
-    })
-    playerImage.src = "./images/player-down.png"
-    player.image = playerImage
+    for(let i = 0; i < worldBoundaries.length; i++) {
+      if(areInCollision(player, {
+        //deep copy
+        ...worldBoundaries[i],
+        position: {
+        x: worldBoundaries[i].position.x,
+        y: worldBoundaries[i].position.y - 3
+      }})){
+        console.log("collision")
+        moving = false
+        break
+      }
+    }
+    if(moving) {
+      movableObjects.forEach( (m) => {
+        m.position.y = m.position.y - 3
+      })
+      playerImage.src = "./images/player-down.png"
+      player.image = playerImage
+    }
   }
 }
 
 function areInCollision(firstObject, secondObject) {
-  return (firstObject.position.x + firstObject.width >= secondObject.position.x
+  return (
+    firstObject.position.x + firstObject.width >= secondObject.position.x
     && firstObject.position.x <= secondObject.position.x + secondObject.width
     && firstObject.position.y <= secondObject.position.y + secondObject.height
     && firstObject.position.y + firstObject.height >= secondObject.position.y
@@ -192,15 +251,16 @@ function areInCollision(firstObject, secondObject) {
 function animate() {
   window.requestAnimationFrame(animate)
   background.draw()
-  //for(let i = 0; i < worldBoundaries.length; i++) {
-  //  worldBoundaries[i].draw()
-  //}
   player.draw()
-  testBoundary.draw()
-
-  if(areInCollision(player, testBoundary)) {
-    console.log("collision")
+  for(let i = 0; i < worldBoundaries.length; i++) {
+    worldBoundaries[i].draw()
   }
+
+  worldBoundaries.forEach( (b) => {
+    if(areInCollision(player, b)) {
+      console.log("collision")
+    }
+  })
   move()
 }
 
