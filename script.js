@@ -11,6 +11,7 @@ for(let i = 0; i < collisions.length; i = i + 70) {
   collisionsMap.push(collisions.slice(i, i + 70))
 }
 
+
 class WorldBoundary {
   constructor({
     position
@@ -21,7 +22,7 @@ class WorldBoundary {
   }
   
   draw() {
-    canvasContext.fillStyle = 'red'
+    canvasContext.fillStyle = 'rgba(255, 0, 0, 0)'
     canvasContext.fillRect(this.position.x, this.position.y, this.width, this.height)
   }
 }
@@ -47,6 +48,9 @@ worldMap.src = "./images/island-map.png"
 
 const playerImage = new Image()
 playerImage.src = "./images/player-down.png"
+
+const foregroundMap = new Image()
+foregroundMap.src = "./images/foreground-map.png"
 
 class Sprite {
   constructor({
@@ -99,6 +103,14 @@ const player = new Sprite({
   }
 })
 
+const foreground = new Sprite({
+  position: {
+    x: -1400,
+    y: -550
+  },
+  image: foregroundMap
+})
+
 const keys = {
   right: {
     pressed: false
@@ -144,7 +156,7 @@ window.addEventListener("keyup", (event) => {
   }
 })
 
-const movableObjects = [background]
+const movableObjects = [background, foreground]
 
 worldBoundaries.forEach( (b) => {
   movableObjects.push(b)
@@ -255,6 +267,7 @@ function animate() {
   for(let i = 0; i < worldBoundaries.length; i++) {
     worldBoundaries[i].draw()
   }
+  foreground.draw()
 
   worldBoundaries.forEach( (b) => {
     if(areInCollision(player, b)) {
