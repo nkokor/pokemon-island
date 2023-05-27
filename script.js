@@ -11,22 +11,6 @@ for(let i = 0; i < collisions.length; i = i + 70) {
   collisionsMap.push(collisions.slice(i, i + 70))
 }
 
-
-class WorldBoundary {
-  constructor({
-    position
-  }) {
-    this.position = position
-    this.width = 42 // 12 * 3.5 (tile is 12x12, map was exported in 350% zoom)
-    this.height = 42
-  }
-  
-  draw() {
-    canvasContext.fillStyle = 'rgba(255, 0, 0, 0)'
-    canvasContext.fillRect(this.position.x, this.position.y, this.width, this.height)
-  }
-}
-
 const worldBoundaries = []
 
 for(let i = 0; i < collisionsMap.length; i++) {
@@ -43,6 +27,27 @@ for(let i = 0; i < collisionsMap.length; i++) {
   }
 }
 
+const battleZonesMap = []
+
+for(let i = 0; i < battleZones.length; i = i + 70) {
+  battleZonesMap.push(battleZones.slice(i, i + 70))
+}
+
+const battleFields = []
+
+for(let i = 0; i < battleZonesMap.length; i++) {
+  for(let j = 0; j < battleZonesMap[i].length; j++) {
+    if(battleZonesMap[i][j] === 1) {
+      battleFields.push(new BattleField({
+        position: {
+          x: j * 42 - 1400,
+          y: i * 42 - 550
+        }
+      }))
+    }
+  }
+}
+
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
@@ -52,54 +57,6 @@ playerImage.src = "./images/player-down.png"
 const foregroundMap = new Image()
 foregroundMap.src = "./images/foreground-map.png"
 
-class Sprite {
-  constructor({
-    position,
-    velocity,
-    image,
-    frames = {
-      max: 1
-    }
-  }) {
-    this.position = position
-    this.image = image
-    this.frames = {
-      ...frames,
-      value: 0,
-      framesElapsed: 0
-    }
-    this.image.onload = () => {
-      this.width = this.image.width / this.frames.max
-      this.height = this.image.height
-    },
-    this.moving = false
-  }
-
-  draw() {
-    canvasContext.drawImage(this.image, 
-      this.frames.value * this.width,
-      0,
-      this.image.width/this.frames.max,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      this.image.width/this.frames.max,
-      this.image.height
-    )
-    if(this.moving) {
-      if(this.frames.max > 1) {
-        this.frames.framesElapsed+=1
-      }
-      if(this.frames.framesElapsed % 10 == 0) {
-        if(this.frames.value + 1 < this.frames.max) {
-          this.frames.value += 1
-        } else {
-          this.frames.value = 0
-        }
-      }
-    }
-  }
-}
 
 const background = new Sprite({
   position: {
@@ -185,6 +142,10 @@ const movableObjects = [background, foreground]
 
 worldBoundaries.forEach( (b) => {
   movableObjects.push(b)
+})
+
+battleFields.forEach( (f) => {
+  movableObjects.push(f)
 })
 
 function move() {
@@ -288,10 +249,13 @@ function areInCollision(firstObject, secondObject) {
 function animate() {
   window.requestAnimationFrame(animate)
   background.draw()
-  player.draw()
   for(let i = 0; i < worldBoundaries.length; i++) {
     worldBoundaries[i].draw()
   }
+  for(let i = 0; i < battleFields.length; i++) {
+    battleFields[i].draw()
+  }
+  player.draw()
   foreground.draw()
 
   worldBoundaries.forEach( (b) => {
