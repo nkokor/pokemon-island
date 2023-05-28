@@ -143,6 +143,15 @@ battleFields.forEach( (f) => {
   movableObjects.push(f)
 })
 
+function areInCollision(firstObject, secondObject) {
+  return (
+    firstObject.position.x + firstObject.width >= secondObject.position.x
+    && firstObject.position.x <= secondObject.position.x + secondObject.width
+    && firstObject.position.y <= secondObject.position.y + secondObject.height
+    && firstObject.position.y + firstObject.height >= secondObject.position.y
+  )
+}
+
 function setScene() {
   background.draw()
   for(let i = 0; i < worldBoundaries.length; i++) {
@@ -250,15 +259,6 @@ function move() {
       })
     }
   }
-}
-
-function areInCollision(firstObject, secondObject) {
-  return (
-    firstObject.position.x + firstObject.width >= secondObject.position.x
-    && firstObject.position.x <= secondObject.position.x + secondObject.width
-    && firstObject.position.y <= secondObject.position.y + secondObject.height
-    && firstObject.position.y + firstObject.height >= secondObject.position.y
-  )
 }
 
 function animate() {
