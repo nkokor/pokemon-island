@@ -1,30 +1,9 @@
 const canvas = document.getElementById("world-canvas")
 
-canvas.width = window.innerWidth     
-canvas.height = window.innerHeight
+canvas.width = 1280     
+canvas.height = 720
 
 const canvasContext = canvas.getContext('2d')
-
-function animateBattle() {
-  window.requestAnimationFrame(animateBattle)
-  
-}
-
-function animateTransition() {
-  gsap.to('#transition-animation-div', {
-    opacity: 1,
-    repeat: 3,
-    yoyo: true,
-    duration: 0.6,
-    onComplete() {
-      gsap.to('#transition-animation-div', {
-        opacity: 1,
-        duration: 0.6
-      })
-      animateBattle()
-    }
-  })
-}
 
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
@@ -35,10 +14,13 @@ playerImage.src = "./images/player-down.png"
 const foregroundMap = new Image()
 foregroundMap.src = "./images/foreground-map.png"
 
+const battleBackgroundImage = new Image()
+battleBackgroundImage.src = "./images/mountain.jpg"
+
 const background = new Sprite({
   position: {
-    x: -1400,
-    y: -550
+    x: -1700,
+    y: -590
   },
   image: worldMap
 })
@@ -56,10 +38,18 @@ const player = new Sprite({
 
 const foreground = new Sprite({
   position: {
-    x: -1400,
-    y: -550
+    x: -1700,
+    y: -590
   },
   image: foregroundMap
+})
+
+const battleBackground = new Sprite({
+  position: {
+    x: 0,
+    y: 0
+  },
+  image: battleBackgroundImage
 })
 
 function mapData(data) {
@@ -79,8 +69,8 @@ for(let i = 0; i < collisionsMap.length; i++) {
     if(collisionsMap[i][j] === 1) {
       worldBoundaries.push(new WorldBoundary({
       position: {
-        x: j * 42 - 1400,
-        y: i * 42 - 550
+        x: j * 42 - 1700,
+        y: i * 42 - 590
       }
       })
     )
@@ -97,8 +87,8 @@ for(let i = 0; i < battleZonesMap.length; i++) {
     if(battleZonesMap[i][j] === 1) {
       battleFields.push(new BattleField({
         position: {
-          x: j * 42 - 1429,
-          y: i * 42 - 575
+          x: j * 42 - 1730,
+          y: i * 42 - 615
         }
       }))
     }
@@ -167,6 +157,34 @@ worldBoundaries.forEach( (b) => {
 battleFields.forEach( (f) => {
   movableObjects.push(f)
 })
+
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle)
+  
+}
+
+function animateTransition() {
+  gsap.to('#transition-animation-div', {
+    opacity: 1,
+    repeat: 3,
+    yoyo: true,
+    duration: 0.6,
+    onComplete() {
+      gsap.to('#transition-animation-div', {
+        opacity: 1,
+        duration: 0.6,
+        onComplete() {
+          animateBattle(),
+          gsap.to('#transition-animation-div', {
+            opacity: 0,
+            duration: 0.6
+          }),
+          battleBackground.draw()
+        }
+      })
+    }
+  })
+}
 
 function areInCollision(firstObject, secondObject) {
   return (

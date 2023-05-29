@@ -4,26 +4,27 @@ html, body {
 }
 
 #game-div {
+  position: absolute;
   display: inline-block;
 }
 
 #transition-animation-div {
   position: absolute;
   z-index: 10;
+  top: 0px;
+  bottom: 0px;
   left: 0px;
   right: 0px;
-  bottom: 0px;
-  top: 0px;
   background-color: black;
   opacity: 0%;
   pointer-events: none;
 }
 
 #world-canvas {
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin:auto;
+  position: relative;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
 }
