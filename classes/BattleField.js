@@ -4,7 +4,7 @@ class BattleField {
   }) {
     this.position = position
     this.width = 60 // 12 * 3.5 (tile is 12x12, map was exported in 350% zoom)
-    this.height = 20
+    this.height = 10
   }
   
   draw() {

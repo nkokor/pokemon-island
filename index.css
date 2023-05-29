@@ -3,6 +3,22 @@ html, body {
   padding: 0px;
 }
 
+#game-div {
+  display: inline-block;
+}
+
+#transition-animation-div {
+  position: absolute;
+  z-index: 10;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+  background-color: black;
+  opacity: 0%;
+  pointer-events: none;
+}
+
 #world-canvas {
   position: absolute;
   top:0;

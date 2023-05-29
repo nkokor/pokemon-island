@@ -5,6 +5,27 @@ canvas.height = window.innerHeight
 
 const canvasContext = canvas.getContext('2d')
 
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle)
+  
+}
+
+function animateTransition() {
+  gsap.to('#transition-animation-div', {
+    opacity: 1,
+    repeat: 3,
+    yoyo: true,
+    duration: 0.6,
+    onComplete() {
+      gsap.to('#transition-animation-div', {
+        opacity: 1,
+        duration: 0.6
+      })
+      animateBattle()
+    }
+  })
+}
+
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
@@ -84,6 +105,10 @@ for(let i = 0; i < battleZonesMap.length; i++) {
   }
 }
 
+const battle = {
+  activated: false
+}
+
 const keys = {
   right: {
     pressed: false
@@ -152,15 +177,20 @@ function areInCollision(firstObject, secondObject) {
   )
 }
 
-function detectBattle() {
+function activateBattle(animation) {
+  window.cancelAnimationFrame(animation)
+  battle.activated = true
+  animateTransition()
+}
+
+function handleBattle(animation) {
   for(let i = 0; i < battleFields.length; i++) {
-    if(areInCollision(player, battleFields[i])) {
-      console.log("BATTLE FIELD")
+    if(areInCollision(player, battleFields[i]) && Math.random() < 0.05) {
+      activateBattle(animation)
       break
     }
   }
 }
-
 
 function setScene() {
   background.draw()
@@ -194,7 +224,7 @@ function animatePlayer() {
   }
 }
 
-function move() {
+function move(animation) {
   let moving = true
   if(keys.right.pressed && lastPressedKey === 'r') {
     for(let i = 0; i < worldBoundaries.length; i++) {
@@ -270,15 +300,17 @@ function move() {
     }
   }
   if(keys.down.pressed || keys.up.pressed || keys.left.pressed || keys.up.pressed) {
-    detectBattle()
+    handleBattle(animation)
   }
 }
 
 function animate() {
-  window.requestAnimationFrame(animate)
-  setScene()
-  animatePlayer()
-  move()
+  let animation = window.requestAnimationFrame(animate)
+  if(!battle.activated) {
+    setScene()
+    animatePlayer()
+    move(animation)
+  }
 }
 
 animate()
