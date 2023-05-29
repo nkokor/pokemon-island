@@ -49,7 +49,7 @@ function mapData(data) {
   return map
 }
 
-const collisionsMap = mapData(collisions)
+const collisionsMap = mapData(collisionZonesData)
 
 const worldBoundaries = []
 
@@ -67,7 +67,7 @@ for(let i = 0; i < collisionsMap.length; i++) {
   }
 }
 
-const battleZonesMap = mapData(battleZones)
+const battleZonesMap = mapData(battleFieldsData)
 
 const battleFields = []
 
@@ -76,8 +76,8 @@ for(let i = 0; i < battleZonesMap.length; i++) {
     if(battleZonesMap[i][j] === 1) {
       battleFields.push(new BattleField({
         position: {
-          x: j * 42 - 1400,
-          y: i * 42 - 550
+          x: j * 42 - 1429,
+          y: i * 42 - 575
         }
       }))
     }
@@ -151,6 +151,16 @@ function areInCollision(firstObject, secondObject) {
     && firstObject.position.y + firstObject.height >= secondObject.position.y
   )
 }
+
+function detectBattle() {
+  for(let i = 0; i < battleFields.length; i++) {
+    if(areInCollision(player, battleFields[i])) {
+      console.log("BATTLE FIELD")
+      break
+    }
+  }
+}
+
 
 function setScene() {
   background.draw()
@@ -258,6 +268,9 @@ function move() {
         m.position.y = m.position.y - 3
       })
     }
+  }
+  if(keys.down.pressed || keys.up.pressed || keys.left.pressed || keys.up.pressed) {
+    detectBattle()
   }
 }
 
