@@ -35,15 +35,15 @@ oshawottImage.src = "./images/oshawott.png"
 const charmanderImage = new Image()
 charmanderImage.src = "./images/charmander.png"
 
-const squirleImage = new Image()
-squirleImage.src = "./images/squirtle.png"
+const squirtleImage = new Image()
+squirtleImage.src = "./images/squirtle.png"
 
 const fennekinImage = new Image()
 fennekinImage.src = "./images/fennekin.png"
 
 const background = new Sprite({
   position: {
-    x: -1700,
+    x: -1657,
     y: -590
   },
   image: worldMap
@@ -62,7 +62,7 @@ const player = new Sprite({
 
 const foreground = new Sprite({
   position: {
-    x: -1700,
+    x: -1657,
     y: -590
   },
   image: foregroundMap
@@ -78,7 +78,7 @@ const battleBackground = new Sprite({
 
 const pikachuNPC = new Sprite({
   position: {
-    x: 502,
+    x: 545,
     y: 100
   },
   image: pikachuImage
@@ -86,7 +86,7 @@ const pikachuNPC = new Sprite({
 
 const piplup = new Sprite({
   position: {
-    x: 155,
+    x: 198,
     y: 155
   },
   image: piplupImage
@@ -94,7 +94,7 @@ const piplup = new Sprite({
 
 const bulbasaur = new Sprite({
   position: {
-    x: -85,
+    x: -42,
     y: 495
   },
   image: bulbasaurImage
@@ -102,7 +102,7 @@ const bulbasaur = new Sprite({
 
 const rowlet = new Sprite({
   position: {
-    x: -1259,
+    x: -1216,
     y: 750
   },
   image: rowletImage
@@ -110,7 +110,7 @@ const rowlet = new Sprite({
 
 const fennekin = new Sprite({
   position: {
-    x: -513,
+    x: -470,
     y: -135
   },
   image: fennekinImage
@@ -118,23 +118,23 @@ const fennekin = new Sprite({
 
 const oshawott = new Sprite({
   position: {
-    x: -289,
+    x: -246,
     y: -45
   },
   image: oshawottImage
 })
 
-const squirle = new Sprite({
+const squirtle = new Sprite({
   position: {
-    x: -937,
+    x: -895,
     y: -218
   },
-  image: squirleImage
+  image: squirtleImage
 })
 
 const charmander = new Sprite({
   position: {
-    x: -721,
+    x: -679,
     y: 155
   },
   image: charmanderImage
@@ -146,7 +146,7 @@ collectedPokemons.push(bulbasaur)
 collectedPokemons.push(oshawott)
 collectedPokemons.push(rowlet)
 collectedPokemons.push(charmander)
-collectedPokemons.push(squirle)
+collectedPokemons.push(squirtle)
 collectedPokemons.push(fennekin)
 collectedPokemons.push(piplup)
 
@@ -167,7 +167,7 @@ for(let i = 0; i < collisionsMap.length; i++) {
     if(collisionsMap[i][j] === 1) {
       worldBoundaries.push(new WorldBoundary({
       position: {
-        x: j * 42 - 1700,
+        x: j * 42 - 1660,
         y: i * 42 - 590
       }
       })
