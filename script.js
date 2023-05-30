@@ -17,6 +17,9 @@ foregroundMap.src = "./images/foreground-map.png"
 const battleBackgroundImage = new Image()
 battleBackgroundImage.src = "./images/mountain.jpg"
 
+const pikachuImage = new Image()
+pikachuImage.src = "./images/pikachu.png"
+
 const piplupImage = new Image()
 piplupImage.src = "./images/piplup.png"
 
@@ -33,7 +36,7 @@ const charmanderImage = new Image()
 charmanderImage.src = "./images/charmander.png"
 
 const squirleImage = new Image()
-squirleImage.src = "./images/squirle.png"
+squirleImage.src = "./images/squirtle.png"
 
 const fennekinImage = new Image()
 fennekinImage.src = "./images/fennekin.png"
@@ -71,6 +74,14 @@ const battleBackground = new Sprite({
     y: 0
   },
   image: battleBackgroundImage
+})
+
+const pikachuNPC = new Sprite({
+  position: {
+    x: 290,
+    y: 250
+  },
+  image: pikachuImage
 })
 
 const piplup = new Sprite({
@@ -235,7 +246,7 @@ window.addEventListener("keyup", (event) => {
   }
 })
 
-const movableObjects = [background, foreground]
+const movableObjects = [background, foreground, pikachuNPC]
 
 worldBoundaries.forEach( (b) => {
   movableObjects.push(b)
@@ -309,6 +320,7 @@ function setScene() {
   for(let i = 0; i < battleFields.length; i++) {
     battleFields[i].draw()
   }
+  pikachuNPC.draw()
   player.draw()
 
   foreground.draw()
