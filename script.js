@@ -78,8 +78,8 @@ const battleBackground = new Sprite({
 
 const pikachuNPC = new Sprite({
   position: {
-    x: 290,
-    y: 250
+    x: 502,
+    y: 100
   },
   image: pikachuImage
 })
@@ -193,6 +193,13 @@ for(let i = 0; i < battleZonesMap.length; i++) {
   }
 }
 
+const npcZone = new WorldBoundary({
+  position: {
+    x: 520,
+    y: 96
+  }
+})
+
 const battle = {
   activated: false
 }
@@ -246,7 +253,7 @@ window.addEventListener("keyup", (event) => {
   }
 })
 
-const movableObjects = [background, foreground, pikachuNPC]
+const movableObjects = [background, foreground, pikachuNPC, npcZone]
 
 worldBoundaries.forEach( (b) => {
   movableObjects.push(b)
@@ -317,10 +324,12 @@ function setScene() {
   for(let i = 0; i < worldBoundaries.length; i++) {
     worldBoundaries[i].draw()
   }
+  npcZone.draw()
   for(let i = 0; i < battleFields.length; i++) {
     battleFields[i].draw()
   }
   pikachuNPC.draw()
+  npcZone.draw()
   player.draw()
 
   foreground.draw()
@@ -351,6 +360,9 @@ function animatePlayer() {
 
 function move(animation) {
   let moving = true
+  if(areInCollision(player, npcZone)) {
+    console.log("NPC COLLISION")
+  }
   if(keys.right.pressed && lastPressedKey === 'r') {
     for(let i = 0; i < worldBoundaries.length; i++) {
       if(areInCollision(player, {
