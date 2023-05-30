@@ -17,6 +17,27 @@ foregroundMap.src = "./images/foreground-map.png"
 const battleBackgroundImage = new Image()
 battleBackgroundImage.src = "./images/mountain.jpg"
 
+const piplupImage = new Image()
+piplupImage.src = "./images/piplup.png"
+
+const bulbasaurImage = new Image()
+bulbasaurImage.src = "./images/bulbasaur.png"
+
+const rowletImage = new Image()
+rowletImage.src = "./images/rowlet.png"
+
+const oshawottImage = new Image()
+oshawottImage.src = "./images/oshawott.png"
+
+const charmanderImage = new Image()
+charmanderImage.src = "./images/charmander.png"
+
+const squirleImage = new Image()
+squirleImage.src = "./images/squirle.png"
+
+const fennekinImage = new Image()
+fennekinImage.src = "./images/fennekin.png"
+
 const background = new Sprite({
   position: {
     x: -1700,
@@ -51,6 +72,72 @@ const battleBackground = new Sprite({
   },
   image: battleBackgroundImage
 })
+
+const piplup = new Sprite({
+  position: {
+    x: 155,
+    y: 155
+  },
+  image: piplupImage
+})
+
+const bulbasaur = new Sprite({
+  position: {
+    x: -85,
+    y: 495
+  },
+  image: bulbasaurImage
+})
+
+const rowlet = new Sprite({
+  position: {
+    x: -1259,
+    y: 750
+  },
+  image: rowletImage
+})
+
+const fennekin = new Sprite({
+  position: {
+    x: -513,
+    y: -135
+  },
+  image: fennekinImage
+})
+
+const oshawott = new Sprite({
+  position: {
+    x: -289,
+    y: -45
+  },
+  image: oshawottImage
+})
+
+const squirle = new Sprite({
+  position: {
+    x: -937,
+    y: -218
+  },
+  image: squirleImage
+})
+
+const charmander = new Sprite({
+  position: {
+    x: -721,
+    y: 155
+  },
+  image: charmanderImage
+})
+
+const collectedPokemons = []
+
+collectedPokemons.push(bulbasaur)
+collectedPokemons.push(oshawott)
+collectedPokemons.push(rowlet)
+collectedPokemons.push(charmander)
+collectedPokemons.push(squirle)
+collectedPokemons.push(fennekin)
+collectedPokemons.push(piplup)
 
 function mapData(data) {
   const map = []
@@ -158,6 +245,10 @@ battleFields.forEach( (f) => {
   movableObjects.push(f)
 })
 
+collectedPokemons.forEach( (p) => {
+  movableObjects.push(p)
+})
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle)
   
@@ -219,7 +310,11 @@ function setScene() {
     battleFields[i].draw()
   }
   player.draw()
+
   foreground.draw()
+  for(let i = 0; i < collectedPokemons.length; i++) {
+    collectedPokemons[i].draw()
+  }
 }
 
 function animatePlayer() {
