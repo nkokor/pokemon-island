@@ -18,4 +18,7 @@ The map was created in Tiled using game assets from itch.io. You can find the li
 Use arrow keys to move around. Once you step onto a battle field (marked by a darker patch of grass), you fight the wizard. If you defeat him, you bring a pokemon back to the island. Bring all the pokemons back home to win the game.
 
 # Credits
-Game assets used to create the map were made by Cyporkador on itch.io. You can get them here: [https://itch.io/](https://cypor.itch.io/12x12-rpg-tileset)
+Game assets used to create the map were made by Cyporkador on itch.io. You can find them here: [https://itch.io/](https://cypor.itch.io/12x12-rpg-tileset)
+
+Sprites used to animate player were made by keith13024 on deviantart.com. You can find them here: [https://devianart.com/](https://keith13024/art/Ash-kalos-overworld-sprite-by-Keith13024-597851130)
+
