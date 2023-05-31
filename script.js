@@ -9,7 +9,7 @@ const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
 const playerImage = new Image()
-playerImage.src = "./images/ash-down.png"
+playerImage.src = "./images/player-sprites/ash-down.png"
 
 const foregroundMap = new Image()
 foregroundMap.src = "./images/foreground-map.png"
@@ -18,28 +18,28 @@ const battleBackgroundImage = new Image()
 battleBackgroundImage.src = "./images/mountain.jpg"
 
 const npcImage = new Image()
-npcImage.src = "./images/npc.png"
+npcImage.src = "./images/pokemon-sprites/pikachu.png"
 
 const piplupImage = new Image()
-piplupImage.src = "./images/squirtle.png"
+piplupImage.src = "./images/pokemon-sprites/squirtle.png"
 
 const phanpyImage = new Image()
-phanpyImage.src = "./images/phanpy.png"
+phanpyImage.src = "./images/pokemon-sprites/phanpy.png"
 
 const skittyImage = new Image()
-skittyImage.src = "./images/skitty.png"
+skittyImage.src = "./images/pokemon-sprites/skitty.png"
 
-const jigglypuffImage = new Image()
-jigglypuffImage.src = "./images/jigglypuff.png"
+const fennekinImage = new Image()
+fennekinImage.src = "./images/pokemon-sprites/fennekin.png"
 
-const rowletImage = new Image()
-rowletImage.src = "./images/rowlet.png"
+const charmanderImage = new Image()
+charmanderImage.src = "./images/pokemon-sprites/charmander.png"
 
-const pikachuImage = new Image()
-pikachuImage.src = "./images/pikachu.png"
+const bulbasaurImage = new Image()
+bulbasaurImage.src = "./images/pokemon-sprites/bulbasaur.png"
 
-const chikoritaImage = new Image()
-chikoritaImage.src = "./images/chikorita.png"
+const eeveeImage = new Image()
+eeveeImage.src = "./images/pokemon-sprites/eevee.png"
 
 const background = new Sprite({
   position: {
@@ -84,71 +84,71 @@ const pikachuNPC = new Sprite({
   image: npcImage
 })
 
-const pikachu = new Sprite({
+const bulbasaur = new Sprite({
   position: {
-    x: 199,
-    y: 142
+    x: 200,
+    y: 178
   },
-  image: pikachuImage
+  image: bulbasaurImage
 })
 
-const chikorita = new Sprite({
+const eevee = new Sprite({
   position: {
-    x: -100,
-    y: 443
+    x: -46,
+    y: 511
   },
-  image: chikoritaImage
+  image: eeveeImage
 })
 
 const skitty = new Sprite({
   position: {
-    x: -1232,
-    y: 732
+    x: -1224,
+    y: 762
   },
   image: skittyImage
 })
 
 const phanpy = new Sprite({
   position: {
-    x: -276,
-    y: -73
+    x: -264,
+    y: -33
   },
   image: phanpyImage
 })
 
-const jigglypuff = new Sprite({
+const fennekin = new Sprite({
   position: {
-    x: -470,
-    y: -133
+    x: -467,
+    y: -119
   },
-  image: jigglypuffImage
+  image: fennekinImage
 })
 
 const squirtle = new Sprite({
   position: {
-    x: -900,
-    y: -231
+    x: -895,
+    y: -201
   },
   image: piplupImage
 })
 
-const rowlet = new Sprite({
+const charmander = new Sprite({
   position: {
     x: -680,
-    y: 155
+    y: 175
   },
-  image: rowletImage
+  image: charmanderImage
 })
 
 const collectedPokemons = []
 
-collectedPokemons.push(chikorita)
-collectedPokemons.push(jigglypuff)
+collectedPokemons.push(eevee)
+collectedPokemons.push(fennekin)
 collectedPokemons.push(skitty)
-collectedPokemons.push(rowlet)
+collectedPokemons.push(charmander)
 collectedPokemons.push(squirtle)
 collectedPokemons.push(phanpy)
-collectedPokemons.push(pikachu)
+collectedPokemons.push(bulbasaur)
 
 function mapData(data) {
   const map = []
@@ -195,7 +195,7 @@ for(let i = 0; i < battleZonesMap.length; i++) {
 
 const npcZone = new WorldBoundary({
   position: {
-    x: 520,
+    x: 547,
     y: 96
   }
 })
@@ -328,7 +328,7 @@ function setScene() {
   for(let i = 0; i < battleFields.length; i++) {
     battleFields[i].draw()
   }
- // pikachuNPC.draw()
+  pikachuNPC.draw()
   npcZone.draw()
   player.draw()
 
@@ -341,19 +341,19 @@ function setScene() {
 function animatePlayer() {
   if(keys.right.pressed && lastPressedKey === 'r') {
     player.moving = true
-    playerImage.src = "./images/ash-right.png"
+    playerImage.src = "./images/player-sprites/ash-right.png"
     player.image = playerImage
   } else if(keys.left.pressed && lastPressedKey === 'l') {
     player.moving = true
-    playerImage.src = "./images/ash-left.png"
+    playerImage.src = "./images/player-sprites/ash-left.png"
     player.image = playerImage
   } else if(keys.up.pressed && lastPressedKey === 'u') {
     player.moving = true
-    playerImage.src = "./images/ash-up.png"
+    playerImage.src = "./images/player-sprites/ash-up.png"
     player.image = playerImage
   } else if(keys.down.pressed && lastPressedKey === 'd') {
     player.moving = true
-    playerImage.src = "./images/ash-down.png"
+    playerImage.src = "./images/player-sprites/ash-down.png"
     player.image = playerImage
   }
 }
