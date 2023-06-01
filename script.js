@@ -458,14 +458,10 @@ function move(animation) {
 }
 
 function showNPCMessage() {
-  //let popupMessage = document.getElementById("popup-img")
-  //popupMessage.style.opacity = "1"
   message.image = messageImage
 }
 
 function hideNPCMessage() {
-  //let popupMessage = document.getElementById("popup-img")
-  //popupMessage.style.opacity = "0"
   message.image = emptyImage
 }
 
