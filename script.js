@@ -5,6 +5,8 @@ canvas.height = 720
 
 const canvasContext = canvas.getContext('2d')
 
+let messageShown = false
+
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
@@ -19,6 +21,12 @@ battleBackgroundImage.src = "./images/mountain.jpg"
 
 const npcImage = new Image()
 npcImage.src = "./images/pokemon-sprites/pikachu.png"
+
+const messageImage = new Image()
+messageImage.src = "./images/popup.png"
+
+const emptyImage = new Image()
+emptyImage.src = "./images/empty.png"
 
 const piplupImage = new Image()
 piplupImage.src = "./images/pokemon-sprites/squirtle.png"
@@ -82,6 +90,14 @@ const pikachuNPC = new Sprite({
     y: 100
   },
   image: npcImage
+})
+
+const message = new Sprite({
+  position: {
+    x: 460,
+    y: -220
+  },
+  image: emptyImage
 })
 
 const bulbasaur = new Sprite({
@@ -253,7 +269,7 @@ window.addEventListener("keyup", (event) => {
   }
 })
 
-const movableObjects = [background, foreground, pikachuNPC, npcZone]
+const movableObjects = [background, foreground, pikachuNPC, npcZone, message]
 
 worldBoundaries.forEach( (b) => {
   movableObjects.push(b)
@@ -336,6 +352,7 @@ function setScene() {
   for(let i = 0; i < collectedPokemons.length; i++) {
     collectedPokemons[i].draw()
   }
+  message.draw()
 }
 
 function animatePlayer() {
@@ -360,16 +377,13 @@ function animatePlayer() {
 
 function move(animation) {
   let moving = true
-  if(areInCollision(player, npcZone)) {
-    console.log("NPC COLLISION")
-  }
   if(keys.right.pressed && lastPressedKey === 'r') {
     for(let i = 0; i < worldBoundaries.length; i++) {
       if(areInCollision(player, {
         //deep copy
         ...worldBoundaries[i],
         position: {
-        x: worldBoundaries[i].position.x - 3,
+        x: worldBoundaries[i].position.x - 5,
         y: worldBoundaries[i].position.y
       }})){
         moving = false
@@ -378,7 +392,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.x = m.position.x - 3
+        m.position.x = m.position.x - 5
       })
     }
   } else if(keys.left.pressed && lastPressedKey === 'l') {
@@ -387,7 +401,7 @@ function move(animation) {
         //deep copy
         ...worldBoundaries[i],
         position: {
-        x: worldBoundaries[i].position.x + 3,
+        x: worldBoundaries[i].position.x + 5,
         y: worldBoundaries[i].position.y
       }})){
         moving = false
@@ -396,7 +410,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.x = m.position.x + 3
+        m.position.x = m.position.x + 5
       })
     }
   } else if(keys.up.pressed && lastPressedKey === 'u') {
@@ -406,7 +420,7 @@ function move(animation) {
         ...worldBoundaries[i],
         position: {
         x: worldBoundaries[i].position.x,
-        y: worldBoundaries[i].position.y + 3
+        y: worldBoundaries[i].position.y + 5
       }})){
         moving = false
         break
@@ -414,7 +428,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.y = m.position.y + 3
+        m.position.y = m.position.y + 5
       })
     }
   } else if(keys.down.pressed && lastPressedKey === 'd') {
@@ -424,7 +438,7 @@ function move(animation) {
         ...worldBoundaries[i],
         position: {
         x: worldBoundaries[i].position.x,
-        y: worldBoundaries[i].position.y - 3
+        y: worldBoundaries[i].position.y - 5
       }})){
         moving = false
         break
@@ -432,13 +446,27 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.y = m.position.y - 3
+        m.position.y = m.position.y - 5
       })
     }
   }
   if(keys.down.pressed || keys.up.pressed || keys.left.pressed || keys.up.pressed) {
+    messageShown = false
+    hideNPCMessage()
     handleBattle(animation)
   }
+}
+
+function showNPCMessage() {
+  //let popupMessage = document.getElementById("popup-img")
+  //popupMessage.style.opacity = "1"
+  message.image = messageImage
+}
+
+function hideNPCMessage() {
+  //let popupMessage = document.getElementById("popup-img")
+  //popupMessage.style.opacity = "0"
+  message.image = emptyImage
 }
 
 function animate() {
@@ -446,6 +474,9 @@ function animate() {
   if(!battle.activated) {
     setScene()
     animatePlayer()
+    if(areInCollision(player, npcZone)) {
+      showNPCMessage()
+    }
     move(animation)
   }
 }
