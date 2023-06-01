@@ -13,8 +13,9 @@ An evil wizard has taken all of the pokemons into his cave up in the snowy mount
 The map was created in Tiled using game assets from itch.io. You can find the link in the "Credits" section.
 ![Screenshot](images/island-map.png)
 
+# Gameplay
+![Screenshot](images/gameplay-screenshots/gameplay1.jpg)
 # How to play
-
 Use arrow keys to move around. Once you step onto a battle field (marked by a darker patch of grass), you fight the wizard. If you defeat him, you bring a pokemon back to the island. Bring all the pokemons back home to win the game.
 
 # Credits
