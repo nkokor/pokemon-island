@@ -20,5 +20,7 @@ Use arrow keys to move around. Once you step onto a battle field (marked by a da
 # Credits
 Game assets used to create the map were made by Cyporkador on itch.io. You can find them here: [https://itch.io/](https://cypor.itch.io/12x12-rpg-tileset)
 
-Sprites used to animate player were made by keith13024 on deviantart.com. You can find them here: [https://devianart.com/](https://keith13024/art/Ash-kalos-overworld-sprite-by-Keith13024-597851130)
+Sprites used for the player were made by keith13024 on deviantart.com. You can find them here: [https://devianart.com/](https://keith13024/art/Ash-kalos-overworld-sprite-by-Keith13024-597851130)
+
+Pokemon sprites were made by pokemonanimalcrossinggirl on tumblr.com. You can find them here: [https://tumblr.com/](https://pokemonanimalcrossinggirl.tumblr.com/post/90577350536)
 
