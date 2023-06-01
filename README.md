@@ -1,5 +1,5 @@
 # pokemon-island
-Fun game with pokemon-like creatures made in Javascript using Canvas
+Fun game inspired by pokemon made in Javascript using Canvas
 
 Still in progress...
 
@@ -7,7 +7,7 @@ Still in progress...
 The game starts with you arriving on the island by boat. 
 
 As you get off the dock and start exploring, you notice the island is empty and all the little homes have been abandonded, or so it looks like. 
-An evil wizard has taken all of the pokemons into his swamp! You must fight the wizard to save the pokemons and bring them back home.
+An evil wizard has taken all of the pokemons into his cave up in the snowy mountains! You must fight the wizard to save the pokemons and bring them back home.
 
 # Map
 The map was created in Tiled using game assets from itch.io. You can find the link in the "Credits" section.
