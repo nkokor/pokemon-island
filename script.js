@@ -5,8 +5,6 @@ canvas.height = 720
 
 const canvasContext = canvas.getContext('2d')
 
-let messageShown = false
-
 const worldMap = new Image()
 worldMap.src = "./images/island-map.png"
 
@@ -383,7 +381,7 @@ function move(animation) {
         //deep copy
         ...worldBoundaries[i],
         position: {
-        x: worldBoundaries[i].position.x - 5,
+        x: worldBoundaries[i].position.x - 3,
         y: worldBoundaries[i].position.y
       }})){
         moving = false
@@ -392,7 +390,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.x = m.position.x - 5
+        m.position.x = m.position.x - 3
       })
     }
   } else if(keys.left.pressed && lastPressedKey === 'l') {
@@ -401,7 +399,7 @@ function move(animation) {
         //deep copy
         ...worldBoundaries[i],
         position: {
-        x: worldBoundaries[i].position.x + 5,
+        x: worldBoundaries[i].position.x + 3,
         y: worldBoundaries[i].position.y
       }})){
         moving = false
@@ -410,7 +408,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.x = m.position.x + 5
+        m.position.x = m.position.x + 3
       })
     }
   } else if(keys.up.pressed && lastPressedKey === 'u') {
@@ -420,7 +418,7 @@ function move(animation) {
         ...worldBoundaries[i],
         position: {
         x: worldBoundaries[i].position.x,
-        y: worldBoundaries[i].position.y + 5
+        y: worldBoundaries[i].position.y + 3
       }})){
         moving = false
         break
@@ -428,7 +426,7 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.y = m.position.y + 5
+        m.position.y = m.position.y + 3
       })
     }
   } else if(keys.down.pressed && lastPressedKey === 'd') {
@@ -438,7 +436,7 @@ function move(animation) {
         ...worldBoundaries[i],
         position: {
         x: worldBoundaries[i].position.x,
-        y: worldBoundaries[i].position.y - 5
+        y: worldBoundaries[i].position.y - 3
       }})){
         moving = false
         break
@@ -446,12 +444,11 @@ function move(animation) {
     }
     if(moving) {
       movableObjects.forEach( (m) => {
-        m.position.y = m.position.y - 5
+        m.position.y = m.position.y - 3
       })
     }
   }
   if(keys.down.pressed || keys.up.pressed || keys.left.pressed || keys.up.pressed) {
-    messageShown = false
     hideNPCMessage()
     handleBattle(animation)
   }
